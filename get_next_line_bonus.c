@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mkarabog <mkarabog@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/04 11:54:10 by mkarabog          #+#    #+#             */
-/*   Updated: 2023/02/04 13:49:53 by mkarabog         ###   ########.fr       */
+/*   Created: 2023/02/04 14:06:54 by mkarabog          #+#    #+#             */
+/*   Updated: 2023/02/04 14:39:28 by mkarabog         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 char	*scan(int fd, char *res)
 {
@@ -41,15 +41,15 @@ char	*scan(int fd, char *res)
 
 char	*get_next_line(int fd)
 {
-	static char		*bufferc;
+	static char		*bufferc[256];
 	char			*str;
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
-	bufferc = scan(fd, bufferc);
-	if (bufferc == NULL)
+	bufferc[fd] = scan(fd, bufferc[fd]);
+	if (bufferc[fd] == NULL)
 		return (NULL);
-	str = get_linex(bufferc);
-	bufferc = next_line(bufferc);
+	str = get_linex(bufferc[fd]);
+	bufferc[fd] = next_line(bufferc[fd]);
 	return (str);
 }
